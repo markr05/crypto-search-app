@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-const BASE_URL = "https://api.bls.gov/publicAPI/v1/timeseries/data/";
-const BLS_API_KEY = "APIKEY";
-const SERIES_ID = "CEU0800000003";
+interface Props {
+  BASE_URL: "https://api.bls.gov/publicAPI/v1/timeseries/data/";
+  BLS_API_KEY: "APIKEY";
+  SERIES_ID: "LNS14000000";
+}
 
-const BLSOccupationData: React.FC = () => {
+const BLSOccupationData = ({ BASE_URL, BLS_API_KEY, SERIES_ID }: Props) => {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
