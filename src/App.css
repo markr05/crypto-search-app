@@ -1,0 +1,33 @@
+.container {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+body {
+  background-color: rgb(62, 62, 62);
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.form-control {
+  border: none;
+  background-color: rgb(112, 112, 112);
+  color: white;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border: none;
+  background-color: rgb(112, 112, 112);
+  color: white;
+}
+
+.input-group-text {
+  background-color: rgb(82, 82, 82);
+  color: white;
+  border: none;
+}
+
+.card {
+  width: 40%;
+  background-color: rgb(212, 212, 212);
+}
