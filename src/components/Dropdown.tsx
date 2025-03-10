@@ -25,27 +25,27 @@ const Dropdown = ({ field, value, onChange }: Props) => {
           <a
             className="dropdown-item"
             href="#"
-            onClick={() => onItemClick("All Employees")}
+            onClick={() => onItemClick("usd")}
           >
-            All Employees
+            usd
           </a>
         </li>
         <li>
           <a
             className="dropdown-item"
             href="#"
-            onClick={() => onItemClick("Average Weekly Hours")}
+            onClick={() => onItemClick("eur")}
           >
-            Average Weekly Hours
+            eur
           </a>
         </li>
         <li>
           <a
             className="dropdown-item"
             href="#"
-            onClick={() => onItemClick("Average Hourly Earnings")}
+            onClick={() => onItemClick("cad")}
           >
-            Average Hourly Earnings
+            cad
           </a>
         </li>
       </ul>

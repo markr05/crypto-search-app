@@ -1,10 +1,11 @@
 interface Props {
   field: string;
   value: string;
+  options: string[];
   onChange: (field: string, value: string) => void;
 }
 
-const Input = ({ field, value, onChange }: Props) => {
+const Input = ({ field, value, options, onChange }: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(field, e.target.value);
   };
@@ -18,9 +19,16 @@ const Input = ({ field, value, onChange }: Props) => {
         type="text"
         className="form-control focus:outline-none"
         aria-describedby="basic-addon1"
+        list="datalistOptions"
+        id="exampleDataList"
         value={value}
         onChange={handleChange}
       ></input>
+      <datalist id="datalistOptions">
+        {options.map((option, index) => (
+          <option key={index} value={option} />
+        ))}
+      </datalist>
     </div>
   );
 };

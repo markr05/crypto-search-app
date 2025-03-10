@@ -1,26 +1,25 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Input from "./components/Input";
 import Button from "./components/Button";
-import JobResults from "./components/JobResults";
-import BLSOccupationData from "./components/index";
 import Dropdown from "./components/Dropdown";
+import CoinGeckoData from "./components/index";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./App.css";
 
 function App() {
-  const [jobResults, setJobResults] = useState(false);
+  const [coinResults, setCoinResults] = useState(false);
   const [currentValues, setCurrentValues] = useState<{ [key: string]: string }>(
     {
-      "Job Title": "",
+      "Coin ID": "",
       "Job Location": "",
-      "Search Query": "Average Hourly Earnings",
+      "Currency Abr": "usd",
     }
   );
 
   const [values, setValues] = useState<{ [key: string]: string }>({
-    "Job Title": "",
+    "Coin ID": "",
     "Job Location": "",
-    "Search Query": "Average Hourly Earnings",
+    "Currency Abr": "usd",
   });
 
   const handleInputChange = (field: string, value: string) => {
@@ -28,43 +27,40 @@ function App() {
       ...prevInputs,
       [field]: value,
     }));
+
+    setCoinResults(false);
   };
 
   const handleButtonClick = () => {
     setValues({
-      "Job Title": currentValues["Job Title"],
-      "Job Location": currentValues["Job Location"],
-      "Search Query": currentValues["Search Query"],
+      "Coin ID": currentValues["Coin ID"].toLowerCase(),
+      "Job Location": currentValues["Job Location"].toLowerCase(),
+      "Currency Abr": currentValues["Currency Abr"].toLowerCase(),
     });
-    setJobResults(true);
+    setCoinResults(true);
   };
 
   return (
     <div className="container mt-2">
-      <BLSOccupationData />
       <Input
-        field="Job Title"
-        value={currentValues["Job Title"]}
+        field="Coin ID"
+        value={currentValues["Coin ID"]}
         onChange={handleInputChange}
+        options={["Bitcoin", "Ethereum", "Litecoin", "Dogecoin", "Solana"]}
       />
       <Input
         field="Job Location"
         value={currentValues["Job Location"]}
         onChange={handleInputChange}
+        options={["Bitcoin", "Ethereum", "Litecoin", "Dogecoin", "Solana"]}
       />
       <Dropdown
-        field="Search Query"
-        value={currentValues["Search Query"]}
+        field="Currency Abr"
+        value={currentValues["Currency Abr"]}
         onChange={handleInputChange}
       />
       <Button onClick={handleButtonClick}>SEARCH</Button>
-      {jobResults && (
-        <JobResults
-          title={values["Job Title"]}
-          location={values["Job Location"]}
-          query={values["Search Query"]}
-        />
-      )}
+      {coinResults && <CoinGeckoData coin={values["Coin ID"]} />}
     </div>
   );
 }
