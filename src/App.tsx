@@ -3,6 +3,7 @@ import Input from "./components/Input";
 import Button from "./components/Button";
 import Dropdown from "./components/Dropdown";
 import CoinGeckoData from "./components/index";
+import { fetchCoinList } from "./services/coingeckoService";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./App.css";
 
@@ -46,13 +47,11 @@ function App() {
         field="Coin ID"
         value={currentValues["Coin ID"]}
         onChange={handleInputChange}
-        options={["Bitcoin", "Ethereum", "Litecoin", "Dogecoin", "Solana"]}
       />
       <Input
         field="Job Location"
         value={currentValues["Job Location"]}
         onChange={handleInputChange}
-        options={["Bitcoin", "Ethereum", "Litecoin", "Dogecoin", "Solana"]}
       />
       <Dropdown
         field="Currency Abr"

@@ -1,14 +1,27 @@
+import { useEffect, useState } from "react";
+import { fetchCoinList } from "../services/coingeckoService";
+
 interface Props {
   field: string;
   value: string;
-  options: string[];
   onChange: (field: string, value: string) => void;
 }
 
-const Input = ({ field, value, options, onChange }: Props) => {
+const Input = ({ field, value, onChange }: Props) => {
+  const [coins, setCoins] = useState<{ id: string; name: string }[]>([]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(field, e.target.value);
   };
+
+  useEffect(() => {
+    const getCoins = async () => {
+      const coinList = await fetchCoinList();
+      setCoins(coinList);
+    };
+
+    getCoins();
+  }, []);
 
   return (
     <div className="input-group mb-3 ml-5">
@@ -25,8 +38,10 @@ const Input = ({ field, value, options, onChange }: Props) => {
         onChange={handleChange}
       ></input>
       <datalist id="datalistOptions">
-        {options.map((option, index) => (
-          <option key={index} value={option} />
+        {coins.map((coin) => (
+          <option key={coin.id} value={coin.id}>
+            {coin.name}
+          </option>
         ))}
       </datalist>
     </div>
