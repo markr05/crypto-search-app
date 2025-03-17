@@ -3,7 +3,7 @@ import Input from "./components/Input";
 import Button from "./components/Button";
 import Dropdown from "./components/Dropdown";
 import CoinGeckoData from "./components/index";
-import { fetchCoinList } from "./services/coingeckoService";
+import CoinGeckoSearch from "./components/AdvancedSearch";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./App.css";
 
@@ -12,14 +12,14 @@ function App() {
   const [currentValues, setCurrentValues] = useState<{ [key: string]: string }>(
     {
       "Coin ID": "",
-      "Job Location": "",
+      "Search Query": "",
       "Currency Abr": "usd",
     }
   );
 
   const [values, setValues] = useState<{ [key: string]: string }>({
     "Coin ID": "",
-    "Job Location": "",
+    "Search Query": "",
     "Currency Abr": "usd",
   });
 
@@ -35,7 +35,7 @@ function App() {
   const handleButtonClick = () => {
     setValues({
       "Coin ID": currentValues["Coin ID"].toLowerCase(),
-      "Job Location": currentValues["Job Location"].toLowerCase(),
+      "Search Query": currentValues["Search Query"].toLowerCase(),
       "Currency Abr": currentValues["Currency Abr"].toLowerCase(),
     });
     setCoinResults(true);
@@ -49,8 +49,8 @@ function App() {
         onChange={handleInputChange}
       />
       <Input
-        field="Job Location"
-        value={currentValues["Job Location"]}
+        field="Search Query"
+        value={currentValues["Search Query"]}
         onChange={handleInputChange}
       />
       <Dropdown
@@ -59,7 +59,7 @@ function App() {
         onChange={handleInputChange}
       />
       <Button onClick={handleButtonClick}>SEARCH</Button>
-      {coinResults && <CoinGeckoData coin={values["Coin ID"]} />}
+      {coinResults && <CoinGeckoSearch coin={values["Coin ID"]} />}
     </div>
   );
 }
