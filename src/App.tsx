@@ -4,6 +4,7 @@ import Button from "./components/Button";
 import Dropdown from "./components/Dropdown";
 import CoinGeckoData from "./components/index";
 import CoinGeckoSearch from "./components/AdvancedSearch";
+import { CoinDataComponent } from "./services/coingeckoService";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./App.css";
 
@@ -13,14 +14,14 @@ function App() {
     {
       "Coin ID": "",
       "Search Query": "",
-      "Currency Abr": "usd",
+      "Currency Abr": "",
     }
   );
 
   const [values, setValues] = useState<{ [key: string]: string }>({
     "Coin ID": "",
     "Search Query": "",
-    "Currency Abr": "usd",
+    "Currency Abr": "",
   });
 
   const handleInputChange = (field: string, value: string) => {
@@ -57,9 +58,27 @@ function App() {
         field="Currency Abr"
         value={currentValues["Currency Abr"]}
         onChange={handleInputChange}
+        items={[
+          "usd",
+          "eur",
+          "cad",
+          "gbp",
+          "jpy",
+          "aud",
+          "chf",
+          "cny",
+          "sek",
+          "nzd",
+        ]}
       />
       <Button onClick={handleButtonClick}>SEARCH</Button>
-      {coinResults && <CoinGeckoSearch coin={values["Coin ID"]} />}
+      {coinResults && (
+        <CoinGeckoSearch
+          coin={values["Coin ID"]}
+          search={values["Search Query"]}
+          currency={values["Currency Abr"]}
+        />
+      )}
     </div>
   );
 }

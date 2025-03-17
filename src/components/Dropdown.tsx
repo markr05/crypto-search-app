@@ -2,9 +2,10 @@ interface Props {
   field: string;
   value: string;
   onChange: (field: string, value: string) => void;
+  items: string[];
 }
 
-const Dropdown = ({ field, value, onChange }: Props) => {
+const Dropdown = ({ field, value, onChange, items }: Props) => {
   const onItemClick = (itemName: string) => {
     onChange(field, itemName);
   };
@@ -21,33 +22,17 @@ const Dropdown = ({ field, value, onChange }: Props) => {
         {value}
       </button>
       <ul className="dropdown-menu">
-        <li>
-          <a
-            className="dropdown-item"
-            href="#"
-            onClick={() => onItemClick("usd")}
-          >
-            usd
-          </a>
-        </li>
-        <li>
-          <a
-            className="dropdown-item"
-            href="#"
-            onClick={() => onItemClick("eur")}
-          >
-            eur
-          </a>
-        </li>
-        <li>
-          <a
-            className="dropdown-item"
-            href="#"
-            onClick={() => onItemClick("cad")}
-          >
-            cad
-          </a>
-        </li>
+        {items.map((item) => (
+          <li key={item}>
+            <a
+              className="dropdown-item"
+              href="#"
+              onClick={() => onItemClick(item)}
+            >
+              {item}
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   );

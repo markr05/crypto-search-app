@@ -6,25 +6,31 @@ interface Coin {
   symbol: string;
 }
 
-export const useCoinList = (): Coin[] => {
-  const [coinList, setCoinList] = useState<Coin[]>([]);
-  useEffect(() => {
-    const fetchCoinList = async () => {
-      try {
-        const response = await fetch(
-          "https://api.coingecko.com/api/v3/coins/list"
-        );
-        if (!response.ok) throw new Error("Failed to fetch coin list");
-        const data: Coin[] = await response.json();
-        setCoinList(data);
-      } catch (error) {
-        console.error(error);
-        setCoinList([]);
-      }
-    };
+export const CoinDataComponent = () => {
+  const [coinData, setCoinData] = useState<Coin[]>([]);
 
-    fetchCoinList();
+  useEffect(() => {
+    const cachedData = localStorage.getItem("coinData");
+
+    if (cachedData) {
+      setCoinData(JSON.parse(cachedData));
+    } else {
+      const fetchCoinData = async () => {
+        try {
+          const response = await fetch(
+            "https://api.coingecko.com/api/v3/coins/list"
+          );
+          const data: Coin[] = await response.json();
+          setCoinData(data);
+          localStorage.setItem("coinData", JSON.stringify(data));
+        } catch (error) {
+          console.error("Failed to fetch coin data:", error);
+        }
+      };
+
+      fetchCoinData();
+    }
   }, []);
 
-  return coinList;
+  return coinData;
 };

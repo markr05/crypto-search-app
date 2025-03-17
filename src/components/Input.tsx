@@ -1,4 +1,4 @@
-import { useCoinList } from "../services/coingeckoService";
+import { CoinDataComponent } from "../services/coingeckoService";
 
 interface Props {
   field: string;
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Input = ({ field, value, onChange }: Props) => {
-  const coins = useCoinList();
+  const coins = CoinDataComponent();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(field, e.target.value);
