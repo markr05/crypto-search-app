@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Navbar from "./components/Navbar";
 import Input from "./components/Input";
 import Button from "./components/Button";
 import Dropdown from "./components/Dropdown";
@@ -72,23 +73,30 @@ function App() {
 
   return (
     <div className="container mt-2">
+      <h1>Crypto Searcher</h1>
       <Input
         field="Coin ID"
         value={currentValues["Coin ID"]}
         onChange={handleInputChange}
       />
-      <Dropdown
-        field="Search Query"
-        value={currentValues["Search Query"]}
-        onChange={handleInputChange}
-        items={search_queries}
-      />
-      <Dropdown
-        field="Currency Abr"
-        value={currentValues["Currency Abr"]}
-        onChange={handleInputChange}
-        items={currencies}
-      />
+      <div className="other-choices">
+        <div>
+          <Dropdown
+            field="Search Query"
+            value={currentValues["Search Query"]}
+            onChange={handleInputChange}
+            items={search_queries}
+          />
+        </div>
+        <div>
+          <Dropdown
+            field="Currency Abr"
+            value={currentValues["Currency Abr"]}
+            onChange={handleInputChange}
+            items={currencies}
+          />
+        </div>
+      </div>
       <Button onClick={handleButtonClick}>SEARCH</Button>
       {coinResults && (
         <CoinGeckoSearch
