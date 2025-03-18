@@ -2,12 +2,12 @@ interface Props {
   field: string;
   value: string;
   onChange: (field: string, value: string) => void;
-  items: string[];
+  items: Record<string, string>;
 }
 
 const Dropdown = ({ field, value, onChange, items }: Props) => {
-  const onItemClick = (itemName: string) => {
-    onChange(field, itemName);
+  const onItemClick = (key: string) => {
+    onChange(field, key);
   };
 
   return (
@@ -19,17 +19,17 @@ const Dropdown = ({ field, value, onChange, items }: Props) => {
         aria-expanded="false"
         style={{ marginBottom: "1%" }}
       >
-        {value}
+        {items[value] || value}
       </button>
       <ul className="dropdown-menu">
-        {items.map((item) => (
-          <li key={item}>
+        {Object.entries(items).map(([key, label]: [string, string]) => (
+          <li key={label}>
             <a
               className="dropdown-item"
               href="#"
-              onClick={() => onItemClick(item)}
+              onClick={() => onItemClick(key)}
             >
-              {item}
+              {label}
             </a>
           </li>
         ))}

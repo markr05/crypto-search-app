@@ -29,7 +29,7 @@ const Input = ({ field, value, onChange }: Props) => {
       ></input>
       <datalist id="datalistOptions">
         {coins.map((coin) => (
-          <option key={coin.id} value={coin.id}>
+          <option key={coin.id} value={coin.name}>
             {coin.name}
           </option>
         ))}
