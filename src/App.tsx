@@ -106,7 +106,8 @@ function App() {
 
   return (
     <>
-      <h1 className="title">CryptoSearch</h1>
+      <h1 className="title main-title">CryptoSearch</h1>
+      <h5 className="title sub-title">Powered by Coingecko API</h5>
       <div className="container mt-2">
         <div>
           <Input

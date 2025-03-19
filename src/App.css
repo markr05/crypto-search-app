@@ -11,6 +11,14 @@ body {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+.main-title {
+  justify-self: center;
+}
+
+.sub-title {
+  justify-self: left;
+}
+
 .form-control {
   border: none;
   background-color: rgb(112, 112, 112);
