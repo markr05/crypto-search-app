@@ -1,6 +1,9 @@
 .container {
   margin-left: 10px;
   margin-right: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-column-gap: 5%;
 }
 
 body {
@@ -45,8 +48,15 @@ h1 {
 
 .other-choices {
   display: grid;
-  grid-template-columns: 15% 15%;
-  gap: 10%;
+  grid-template-columns: min-content min-content;
+  gap: 1%;
+  margin-bottom: 1%;
+}
+
+.search-buttons {
+  display: grid;
+  grid-template-columns: min-content min-content;
+  gap: 1%;
   margin-bottom: 1%;
 }
 
@@ -68,4 +78,8 @@ h1 {
 
 .dropdown-menu {
   background-color: rgb(212, 212, 212);
+}
+
+.title {
+  text-align: center;
 }

@@ -24,45 +24,51 @@ const CoinGeckoSearch = ({
     const fetchData = async () => {
       const cachedData = localStorage.getItem(cacheKey);
 
+      if (coin === "") {
+        setLoading(false);
+        return;
+      }
+
       if (cachedData) {
         setData(JSON.parse(cachedData));
         setLoading(false);
-      } else {
-        try {
-          const response = await fetch(`${BASE_URL}${endpoint}`);
+        return;
+      }
 
-          if (!response.ok) {
-            const errorDetails = await response.text();
-            throw new Error(
-              `Failed to fetch data ${response.status} ${errorDetails}`
-            );
-          }
+      try {
+        const response = await fetch(`${BASE_URL}${endpoint}`);
 
-          const result = await response.json();
-          setData(result);
-
-          localStorage.setItem(cacheKey, JSON.stringify(result));
-        } catch (err) {
-          setError("Failed to fetch data");
-          console.error(err);
-        } finally {
-          setLoading(false);
+        if (!response.ok) {
+          const errorDetails = await response.json();
+          throw new Error(`${response.status} ${errorDetails.error}`);
         }
+
+        const result = await response.json();
+        setData(result);
+        localStorage.setItem(cacheKey, JSON.stringify(result));
+      } catch (err: any) {
+        console.error("Fetch error:", err);
+
+        setError(
+          err.message || `An unexpected error occurred while fetching data.`
+        );
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [BASE_URL, endpoint, coin, search, currency]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="results">Loading...</div>;
+  if (error) return <div className="results">Error: {error}</div>;
 
   const value = data?.["market_data"]?.[search]?.[currency];
-  const formattedValue = value ? value.toLocaleString() : "N/A";
+  const formattedValue = value ? value.toLocaleString() : "";
 
   return (
     <div>
-      <div className="results">${formattedValue}</div>
+      <div className="results">{formattedValue}</div>
     </div>
   );
 };

@@ -1,15 +1,21 @@
 import { useState } from "react";
-import Navbar from "./components/Navbar";
 import Input from "./components/Input";
 import Button from "./components/Button";
 import Dropdown from "./components/Dropdown";
-import CoinGeckoData from "./components/index";
 import CoinGeckoSearch from "./components/AdvancedSearch";
+import { CoinDataComponent } from "./services/coingeckoService";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./App.css";
 
 function App() {
+  const coins = CoinDataComponent();
+  const coinMap: { [key: string]: string } = {};
+  coins.forEach((coin) => {
+    coinMap[coin.name.toLowerCase()] = coin.id;
+  });
+
   const [coinResults, setCoinResults] = useState(false);
+  const [compare, setCompare] = useState(false);
   const currencies: { [key: string]: string } = {
     usd: "United States Dollar",
     eur: "Euro",
@@ -44,6 +50,9 @@ function App() {
       "Coin ID": "",
       "Search Query": "",
       "Currency Abr": "",
+      "Coin ID 2": "",
+      "Search Query 2": "",
+      "Currency Abr 2": "",
     }
   );
 
@@ -51,6 +60,9 @@ function App() {
     "Coin ID": "",
     "Search Query": "",
     "Currency Abr": "",
+    "Coin ID 2": "",
+    "Search Query 2": "",
+    "Currency Abr 2": "",
   });
 
   const handleInputChange = (field: string, value: string) => {
@@ -63,49 +75,113 @@ function App() {
   };
 
   const handleButtonClick = () => {
+    if (
+      currentValues["Coin ID"] === "" ||
+      currentValues["Search Query"] === "" ||
+      currentValues["Currency Abr"] === ""
+    ) {
+      setCoinResults(false);
+      return;
+    }
+
     setValues({
-      "Coin ID": currentValues["Coin ID"].toLowerCase(),
+      "Coin ID": currentValues["Coin ID"]
+        ? coinMap[currentValues["Coin ID"].toLowerCase()]
+        : "",
       "Search Query": currentValues["Search Query"].toLowerCase(),
       "Currency Abr": currentValues["Currency Abr"].toLowerCase(),
+      "Coin ID 2": currentValues["Coin ID 2"]
+        ? coinMap[currentValues["Coin ID 2"].toLowerCase()]
+        : "",
+      "Search Query 2": currentValues["Search Query 2"].toLowerCase(),
+      "Currency Abr 2": currentValues["Currency Abr 2"].toLowerCase(),
     });
+
     setCoinResults(true);
   };
 
+  const handleCompareClick = () => {
+    setCompare((prev) => !prev);
+  };
+
   return (
-    <div className="container mt-2">
-      <h1>Crypto Searcher</h1>
-      <Input
-        field="Coin ID"
-        value={currentValues["Coin ID"]}
-        onChange={handleInputChange}
-      />
-      <div className="other-choices">
+    <>
+      <h1 className="title">CryptoSearch</h1>
+      <div className="container mt-2">
         <div>
-          <Dropdown
-            field="Search Query"
-            value={currentValues["Search Query"]}
+          <Input
+            field="Coin ID"
+            value={currentValues["Coin ID"]}
             onChange={handleInputChange}
-            items={search_queries}
           />
+          <div className="other-choices">
+            <div>
+              <Dropdown
+                field="Search Query"
+                value={currentValues["Search Query"]}
+                onChange={handleInputChange}
+                items={search_queries}
+              />
+            </div>
+            <div>
+              <Dropdown
+                field="Currency Abr"
+                value={currentValues["Currency Abr"]}
+                onChange={handleInputChange}
+                items={currencies}
+              />
+            </div>
+          </div>
+          <div className="search-buttons">
+            <Button onClick={handleButtonClick}>SEARCH</Button>
+            <Button onClick={handleCompareClick}>COMPARE</Button>
+          </div>
         </div>
         <div>
-          <Dropdown
-            field="Currency Abr"
-            value={currentValues["Currency Abr"]}
-            onChange={handleInputChange}
-            items={currencies}
-          />
+          {compare && (
+            <div>
+              <Input
+                field="Coin ID 2"
+                value={currentValues["Coin ID 2"]}
+                onChange={handleInputChange}
+              />
+              <div className="other-choices">
+                <div>
+                  <Dropdown
+                    field="Search Query 2"
+                    value={currentValues["Search Query 2"]}
+                    onChange={handleInputChange}
+                    items={search_queries}
+                  />
+                </div>
+                <div>
+                  <Dropdown
+                    field="Currency Abr 2"
+                    value={currentValues["Currency Abr 2"]}
+                    onChange={handleInputChange}
+                    items={currencies}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
+        {coinResults && (
+          <CoinGeckoSearch
+            coin={values["Coin ID"]}
+            search={values["Search Query"]}
+            currency={values["Currency Abr"]}
+          />
+        )}
+        {coinResults && (
+          <CoinGeckoSearch
+            coin={values["Coin ID 2"]}
+            search={values["Search Query 2"]}
+            currency={values["Currency Abr 2"]}
+          />
+        )}
       </div>
-      <Button onClick={handleButtonClick}>SEARCH</Button>
-      {coinResults && (
-        <CoinGeckoSearch
-          coin={values["Coin ID"]}
-          search={values["Search Query"]}
-          currency={values["Currency Abr"]}
-        />
-      )}
-    </div>
+    </>
   );
 }
 
