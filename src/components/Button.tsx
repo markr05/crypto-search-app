@@ -1,15 +1,40 @@
+import { useState } from "react";
+
 interface Props {
   children: string;
-  color?: "primary" | "secondary" | "danger" | "success";
   onClick: () => void;
 }
 
-const Button = ({ children, color = "primary", onClick }: Props) => {
+const Button = ({ children, onClick }: Props) => {
+  const [isCompareActive, setIsCompareActive] = useState(false);
+
+  const handleClick = () => {
+    if (children === "COMPARE") {
+      setIsCompareActive((prev) => !prev);
+    }
+    onClick();
+  };
+
   return (
     <button
-      className={"btn btn-" + color}
-      style={{ marginBottom: "1%" }}
-      onClick={onClick}
+      className="btn skewed-btn"
+      style={{
+        marginBottom: "0",
+        transform: "skewX(-15deg)",
+        padding: "10px 20px",
+        fontWeight: "bold",
+        transition: "all 0.3s ease-in-out",
+        backgroundColor:
+          children === "SEARCH"
+            ? "hsl(210 100% 59%)"
+            : isCompareActive
+            ? "#28a745"
+            : "#dc3545",
+        border: "none",
+        outline: "none",
+        color: "white",
+      }}
+      onClick={handleClick}
     >
       {children}
     </button>

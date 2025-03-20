@@ -1,15 +1,17 @@
-export const currencies: { [key: string]: string } = {
-  usd: "United States Dollar",
-  eur: "Euro",
-  cad: "Canadian Dollar",
-  gbp: "British Pound",
-  jpy: "Japanese Yen",
-  aud: "Australian Dollar",
-  chf: "Swiss Franc",
-  cny: "Chinese Yuan",
-  sek: "Swedish Krona",
-  nzd: "New Zealand Dollar",
+export const currencies: Record<string, string> = {
+  USD: "United States Dollar ($)",
+  EUR: "Euro (€)",
+  GBP: "British Pound (£)",
+  JPY: "Japanese Yen (¥)",
+  AUD: "Australian Dollar (A$)",
+  CAD: "Canadian Dollar (C$)",
+  CHF: "Swiss Franc (CHF )",
+  CNY: "Chinese Yuan (¥)",
+  INR: "Indian Rupee (₹)",
+  BTC: "Bitcoin (₿)",
+  ETH: "Ethereum (Ξ)",
 };
+
 
 export const search_queries: { [key: string]: string } = {
   current_price: "Current Price",

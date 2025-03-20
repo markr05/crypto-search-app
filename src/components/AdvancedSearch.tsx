@@ -6,6 +6,7 @@ interface Props {
   coin: string;
   search: string;
   currency: string;
+  symbol: string;
 }
 
 const CoinGeckoSearch = ({
@@ -14,6 +15,7 @@ const CoinGeckoSearch = ({
   endpoint = `coins/${coin}`,
   search,
   currency,
+  symbol,
 }: Props) => {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -68,7 +70,10 @@ const CoinGeckoSearch = ({
 
   return (
     <div>
-      <div className="results">{formattedValue}</div>
+      <div className="results">
+        {symbol}
+        {formattedValue}
+      </div>
     </div>
   );
 };

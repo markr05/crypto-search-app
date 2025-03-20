@@ -1,67 +1,49 @@
 import { useState, useEffect } from "react";
 import getCoinMap from "../utils/coinMap";
+import { getCurrencySymbol } from "../utils/currencySymbol";
 
 export function useCryptoSearch() {
   const coinMap = getCoinMap();
-
   const [coinResults, setCoinResults] = useState(false);
   const [compare, setCompare] = useState(false);
   const [percentage, setPercentage] = useState(false);
-  
-  const [currentValues, setCurrentValues] = useState<{ [key: string]: string }>({
-    "Coin ID": "",
-    "Search Query": "",
-    "Currency Abr": "",
-    "Coin ID 2": "",
-    "Search Query 2": "",
-    "Currency Abr 2": "",
-  });
+  const [coins, setCoins] = useState([
+    { id: "", searchQuery: "", currency: "", currencySymbol: "", apiCoinId: "" },
+    { id: "", searchQuery: "", currency: "", currencySymbol: "", apiCoinId: "" },
+  ]);
 
-  const [values, setValues] = useState<{ [key: string]: string }>({
-    "Coin ID": "",
-    "Search Query": "",
-    "Currency Abr": "",
-    "Coin ID 2": "",
-    "Search Query 2": "",
-    "Currency Abr 2": "",
-  });
-
-  const handleInputChange = (field: string, value: string) => {
-    setCurrentValues((prevInputs) => ({
-      ...prevInputs,
-      [field]: value,
-    }));
-
+  const handleInputChange = (index: number, field: keyof (typeof coins)[0], value: string) => {
+    setCoins((prevCoins) => {
+      const updatedCoins = [...prevCoins];
+      updatedCoins[index] = { ...updatedCoins[index], [field]: value };
+      return updatedCoins;
+    });
     setCoinResults(false);
   };
 
   useEffect(() => {
-    setPercentage(currentValues["Search Query"].toLowerCase().includes("change"));
-  }, [currentValues["Search Query"]]);
+    setPercentage(coins[0].searchQuery.toLowerCase().includes("change"));
+  }, [coins[0].searchQuery]);
 
   const handleButtonClick = () => {
-    if (
-      currentValues["Coin ID"] === "" ||
-      currentValues["Search Query"] === "" ||
-      currentValues["Currency Abr"] === ""
-    ) {
+    if (coins[0].id === "" || coins[0].searchQuery === "" || coins[0].currency === "") {
       setCoinResults(false);
       return;
     }
 
-    setValues({
-      "Coin ID": currentValues["Coin ID"]
-        ? coinMap[currentValues["Coin ID"].toLowerCase()]
-        : "",
-      "Search Query": currentValues["Search Query"].toLowerCase(),
-      "Currency Abr": currentValues["Currency Abr"].toLowerCase(),
-      "Coin ID 2": currentValues["Coin ID 2"]
-        ? coinMap[currentValues["Coin ID 2"].toLowerCase()]
-        : "",
-      "Search Query 2": currentValues["Search Query 2"].toLowerCase(),
-      "Currency Abr 2": currentValues["Currency Abr 2"].toLowerCase(),
-    });
-
+    setCoins((prevCoins) => 
+      prevCoins.map((coin) => {
+        const symbol = getCurrencySymbol(coin.currency);
+        const mappedCoinId = coin.id ? coinMap[coin.id.toLowerCase()] || coin.id : "";
+        
+        return {
+          ...coin,
+          currencySymbol: symbol || "",
+          apiCoinId: mappedCoinId
+        };
+      })
+    );
+    
     setCoinResults(true);
   };
 
@@ -73,8 +55,7 @@ export function useCryptoSearch() {
     coinResults,
     compare,
     percentage,
-    currentValues,
-    values,
+    coins,
     handleInputChange,
     handleButtonClick,
     handleCompareClick,
