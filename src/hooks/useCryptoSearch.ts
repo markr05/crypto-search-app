@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import getCoinMap from "../utils/coinMap";
 
 export function useCryptoSearch() {
@@ -6,6 +6,7 @@ export function useCryptoSearch() {
 
   const [coinResults, setCoinResults] = useState(false);
   const [compare, setCompare] = useState(false);
+  const [percentage, setPercentage] = useState(false);
   
   const [currentValues, setCurrentValues] = useState<{ [key: string]: string }>({
     "Coin ID": "",
@@ -33,6 +34,10 @@ export function useCryptoSearch() {
 
     setCoinResults(false);
   };
+
+  useEffect(() => {
+    setPercentage(currentValues["Search Query"].toLowerCase().includes("change"));
+  }, [currentValues["Search Query"]]);
 
   const handleButtonClick = () => {
     if (
@@ -67,6 +72,7 @@ export function useCryptoSearch() {
   return {
     coinResults,
     compare,
+    percentage,
     currentValues,
     values,
     handleInputChange,

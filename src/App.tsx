@@ -11,6 +11,7 @@ function App() {
   const {
     coinResults,
     compare,
+    percentage,
     currentValues,
     values,
     handleInputChange,
@@ -36,12 +37,14 @@ function App() {
               onChange={handleInputChange}
               items={search_queries}
             />
-            <Dropdown
-              field="Currency Abr"
-              value={currentValues["Currency Abr"]}
-              onChange={handleInputChange}
-              items={currencies}
-            />
+            {!percentage && (
+              <Dropdown
+                field="Currency Abr"
+                value={currentValues["Currency Abr"]}
+                onChange={handleInputChange}
+                items={currencies}
+              />
+            )}
           </div>
           <div className="search-buttons">
             <Button onClick={handleButtonClick}>SEARCH</Button>
