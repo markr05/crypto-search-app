@@ -4,7 +4,7 @@ const getCoinMap = () => {
   const coins = CoinDataComponent();
   const coinMap: { [key: string]: string } = {};
   coins.forEach((coin) => {
-    coinMap[coin.name.toLowerCase()] = coin.id;
+    coinMap[coin.id] = coin.name;
   });
   return coinMap;
 }

@@ -1,4 +1,4 @@
-import Input from "./components/Input";
+import CoinInput from "./components/CoinInput";
 import Button from "./components/Button";
 import Dropdown from "./components/Dropdown";
 import CoinGeckoSearch from "./components/AdvancedSearch";
@@ -25,7 +25,7 @@ function App() {
       <div className="container mt-2">
         {[0, ...(compare ? [1] : [])].map((index) => (
           <div className="coin-input" key={index}>
-            <Input
+            <CoinInput
               field={`Coin ID ${index + 1}`}
               value={coins[index].id}
               onChange={(field, value) => handleInputChange(index, "id", value)}
