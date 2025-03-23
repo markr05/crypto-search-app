@@ -32,13 +32,13 @@ function App() {
             <CoinInput
               field={`Coin ID ${index + 1}`}
               value={coins[index].id}
-              onChange={(field, value) => handleInputChange(index, "id", value)}
+              onChange={(_, value) => handleInputChange(index, "id", value)}
             />
             <div className="other-choices">
               <Dropdown
                 field={`Search Query ${index + 1}`}
                 value={coins[index].searchQuery}
-                onChange={(field, value) =>
+                onChange={(_, value) =>
                   handleInputChange(index, "searchQuery", value)
                 }
                 items={search_queries}
@@ -46,7 +46,7 @@ function App() {
               <Dropdown
                 field={`Currency Abr ${index + 1}`}
                 value={coins[index].currency}
-                onChange={(field, value) =>
+                onChange={(_, value) =>
                   handleInputChange(index, "currency", value)
                 }
                 items={currencies}

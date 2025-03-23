@@ -59,7 +59,6 @@ const TrendingSearch = () => {
     })
   );
 
-  console.log(trendingCoinsList);
   return (
     <div>
       <span className="trending-coins">
