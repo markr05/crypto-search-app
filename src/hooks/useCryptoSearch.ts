@@ -1,21 +1,29 @@
 import { useState, useEffect } from "react";
-import getCoinMap from "../utils/coinMap";
 import { getCurrencySymbol } from "../utils/currencySymbol";
+import { getCoinNameIdMap } from "../services/coingeckoService";
 
 export function useCryptoSearch() {
-  const coinMap = getCoinMap();
+  const nameToIdMap = getCoinNameIdMap();
   const [coinResults, setCoinResults] = useState(false);
   const [compare, setCompare] = useState(false);
   const [percentage, setPercentage] = useState(false);
   const [coins, setCoins] = useState([
-    { id: "", searchQuery: "", currency: "", currencySymbol: "", apiCoinId: "" },
-    { id: "", searchQuery: "", currency: "", currencySymbol: "", apiCoinId: "" },
+    { id: "", searchQuery: "", currency: "", currencySymbol: "", coinID: "" },
+    { id: "", searchQuery: "", currency: "", currencySymbol: "", coinID: "" },
   ]);
 
   const handleInputChange = (index: number, field: keyof (typeof coins)[0], value: string) => {
     setCoins((prevCoins) => {
       const updatedCoins = [...prevCoins];
       updatedCoins[index] = { ...updatedCoins[index], [field]: value };
+      
+      if (field === "id" && value) {
+        const coinID = nameToIdMap[value];
+        if (coinID) {
+          updatedCoins[index].coinID = coinID;
+        }
+      }
+      
       return updatedCoins;
     });
     setCoinResults(false);
@@ -34,12 +42,11 @@ export function useCryptoSearch() {
     setCoins((prevCoins) => 
       prevCoins.map((coin) => {
         const symbol = getCurrencySymbol(coin.currency);
-        const mappedCoinId = coin.id ? coinMap[coin.id.toLowerCase()] || coin.id : "";
-        
+        const coinID = nameToIdMap[coin.id]
         return {
           ...coin,
           currencySymbol: symbol || "",
-          apiCoinId: mappedCoinId
+          coinID: coinID || ""
         };
       })
     );

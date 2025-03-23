@@ -1,4 +1,4 @@
-import getCoinMap from "../utils/coinMap";
+import { getCoinIdNameMap } from "../services/coingeckoService";
 
 interface Props {
   field: string;
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const CoinInput = ({ field, value, onChange }: Props) => {
-  const coins = getCoinMap();
+  const coins = getCoinIdNameMap();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(field, e.target.value);
@@ -28,9 +28,9 @@ const CoinInput = ({ field, value, onChange }: Props) => {
         onChange={handleChange}
       ></input>
       <datalist id="datalistOptions">
-        {Object.values(coins).map((name, index) => (
-          <option key={index} value={name}>
-            {name}
+        {Object.keys(coins).map((name, index) => (
+          <option key={index} value={coins[name]}>
+            {coins[name]}
           </option>
         ))}
       </datalist>

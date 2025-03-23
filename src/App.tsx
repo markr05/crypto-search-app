@@ -2,6 +2,7 @@ import CoinInput from "./components/CoinInput";
 import Button from "./components/Button";
 import Dropdown from "./components/Dropdown";
 import CoinGeckoSearch from "./components/AdvancedSearch";
+import TrendingSearch from "./components/TrendingSearch";
 import { currencies, search_queries } from "./constants";
 import { useCryptoSearch } from "./hooks/useCryptoSearch";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -22,6 +23,9 @@ function App() {
     <>
       <h1 className="title main-title">CryptoSearch</h1>
       <h5 className="title sub-title">Powered by Coingecko API</h5>
+      <div className="trending">
+        <TrendingSearch />
+      </div>
       <div className="container mt-2">
         {[0, ...(compare ? [1] : [])].map((index) => (
           <div className="coin-input" key={index}>
@@ -57,8 +61,8 @@ function App() {
                 {" "}
                 <CoinGeckoSearch
                   key={index}
-                  coin={coin.apiCoinId || coin.id}
-                  search={coin.searchQuery}
+                  coin={coin.coinID}
+                  searchQuery={coin.searchQuery}
                   currency={coin.currency.toLowerCase()}
                   symbol={percentage ? "% " : coin.currencySymbol}
                 />{" "}
