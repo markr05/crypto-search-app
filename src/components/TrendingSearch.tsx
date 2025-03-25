@@ -59,10 +59,15 @@ const TrendingSearch = () => {
     })
   );
 
+  const sortedTrendingCoins = trendingCoinsList.sort(
+    (a: any, b: any) =>
+      Math.abs(b.price_change_24h) - Math.abs(a.price_change_24h)
+  );
+
   return (
     <div>
       <span className="trending-coins">
-        {trendingCoinsList
+        {sortedTrendingCoins
           .filter((coin: Coin) => coin.price > 0.0001)
           .map((coin: Coin) => (
             <div className="trending-coin" key={coin.name}>

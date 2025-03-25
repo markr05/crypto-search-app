@@ -19,6 +19,9 @@
   border-right: none;
   border-left: none;
   justify-content: center;
+  flex-wrap: wrap;
+  position: fixed;
+  bottom: 0;
 }
 
 .trending-coin {
@@ -95,16 +98,6 @@
   grid-column: 2;
   grid-row: 2;
 }
-
-.search-buttons {
-  grid-column: 1;
-  grid-row: 1;
-  display: flex;
-  justify-content: left;
-  gap: 10px;
-  margin-top: 20px;
-}
-
 .placeholder {
   grid-column: 2;
   grid-row: 1;
@@ -121,6 +114,7 @@ body {
 
 
 .main-title {
+  transform: skewX(-20deg);
   justify-self: center;
 }
 
@@ -171,10 +165,12 @@ h1 {
 }
 
 .search-buttons {
+  justify-content: center;
   display: grid;
   grid-template-columns: min-content min-content;
   gap: 1%;
   margin-bottom: 1%;
+  margin-top: 2%;
 }
 
 .dropdown-toggle {

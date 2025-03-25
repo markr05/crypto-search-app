@@ -23,8 +23,9 @@ function App() {
     <>
       <h1 className="title main-title">CryptoSearch</h1>
       <h5 className="title sub-title">Powered by Coingecko API</h5>
-      <div className="trending">
-        <TrendingSearch />
+      <div className="search-buttons">
+        <Button onClick={handleButtonClick}>SEARCH</Button>
+        <Button onClick={handleCompareClick}>COMPARE</Button>
       </div>
       <div className="container mt-2">
         {[0, ...(compare ? [1] : [])].map((index) => (
@@ -57,7 +58,7 @@ function App() {
         {coinResults &&
           coins.map((coin, index) =>
             coin.id ? (
-              <div className="results" key={`result-${index}`}>
+              <div className={"results"} key={`result-${index}`}>
                 {" "}
                 <CoinGeckoSearch
                   key={index}
@@ -69,10 +70,9 @@ function App() {
               </div>
             ) : null
           )}
-        <div className="search-buttons">
-          <Button onClick={handleButtonClick}>SEARCH</Button>
-          <Button onClick={handleCompareClick}>COMPARE</Button>
-        </div>
+      </div>
+      <div className="trending">
+        <TrendingSearch />
       </div>
     </>
   );
