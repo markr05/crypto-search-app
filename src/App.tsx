@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       <h1 className="title main-title">CryptoSearch</h1>
-      <h5 className="title sub-title">Powered by Coingecko API</h5>
+      <h5 className="title">Powered by Coingecko API</h5>
       <div className="search-buttons">
         <Button onClick={handleButtonClick}>SEARCH</Button>
         <Button onClick={handleCompareClick}>COMPARE</Button>
@@ -64,14 +64,14 @@ function App() {
                   key={index}
                   coin={coin.coinID}
                   searchQuery={coin.searchQuery}
-                  currency={coin.currency.toLowerCase()}
+                  currency={coin.currency}
                   symbol={percentage ? "% " : coin.currencySymbol}
                 />{" "}
               </div>
             ) : null
           )}
       </div>
-      <div className="trending">
+      <div>
         <TrendingSearch />
       </div>
     </>

@@ -62,13 +62,14 @@ const CoinGeckoSearch = ({
   let value;
 
   if (data?.market_data && data.market_data[searchQuery]) {
-    value = data.market_data[searchQuery][currency];
+    value = data.market_data[searchQuery][currency.toLowerCase()];
   }
 
   if (value === undefined || value === null) {
     return (
       <div className="results">
-        {symbol} N/A (Data not available for {searchQuery} in {currency})
+        {symbol} N/A (Data not available for {searchQuery} in{" "}
+        {currency.toLowerCase()})
       </div>
     );
   }

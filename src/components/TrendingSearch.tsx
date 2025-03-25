@@ -41,8 +41,8 @@ const TrendingSearch = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div className="results">Loading...</div>;
-  if (error) return <div className="results">Error: {error}</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   const trendingCoinsList = data.coins.map(
     (coin: {
@@ -70,17 +70,17 @@ const TrendingSearch = () => {
         {sortedTrendingCoins
           .filter((coin: Coin) => coin.price > 0.0001)
           .map((coin: Coin) => (
-            <div className="trending-coin" key={coin.name}>
+            <div className="coin" key={coin.name}>
               <div className="trending-title">{coin.name}</div>
-              <img className="trending-thumbnail" src={coin.small} />
-              <div className="trending-price">{`$${
+              <img className="thumbnail" src={coin.small} />
+              <div className="price">{`$${
                 coin.price < 10 ? coin.price.toFixed(3) : coin.price.toFixed(2)
               }`}</div>
               <div
                 className={
                   coin.price_change_24h > 0
-                    ? "trending-change positive"
-                    : "trending-change negative"
+                    ? "change positive"
+                    : "change negative"
                 }
               >
                 {coin.price_change_24h > 0
