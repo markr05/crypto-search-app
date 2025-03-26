@@ -3,6 +3,7 @@ import Button from "./components/Button";
 import Dropdown from "./components/Dropdown";
 import CoinGeckoSearch from "./components/AdvancedSearch";
 import TrendingSearch from "./components/TrendingSearch";
+import MarketTrends from "./components/MarketTrends";
 import { currencies, search_queries } from "./constants";
 import { useCryptoSearch } from "./hooks/useCryptoSearch";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -23,53 +24,54 @@ function App() {
     <>
       <h1 className="title main-title">CryptoSearch</h1>
       <h5 className="title">Powered by Coingecko API</h5>
+      <div>
+        <MarketTrends />
+      </div>
       <div className="search-buttons">
         <Button onClick={handleButtonClick}>SEARCH</Button>
         <Button onClick={handleCompareClick}>COMPARE</Button>
       </div>
       <div className="container mt-2">
         {[0, ...(compare ? [1] : [])].map((index) => (
-          <div className="coin-input" key={index}>
-            <CoinInput
-              field={`Coin ID ${index + 1}`}
-              value={coins[index].id}
-              onChange={(_, value) => handleInputChange(index, "id", value)}
-            />
-            <div className="other-choices">
-              <Dropdown
-                field={`Search Query ${index + 1}`}
-                value={coins[index].searchQuery}
-                onChange={(_, value) =>
-                  handleInputChange(index, "searchQuery", value)
-                }
-                items={search_queries}
+          <div className="coin-wrapper" key={index}>
+            <div className="coin-input">
+              <CoinInput
+                field={`Coin ${index + 1}`}
+                value={coins[index].id}
+                onChange={(_, value) => handleInputChange(index, "id", value)}
               />
-              <Dropdown
-                field={`Currency Abr ${index + 1}`}
-                value={coins[index].currency}
-                onChange={(_, value) =>
-                  handleInputChange(index, "currency", value)
-                }
-                items={currencies}
-              />
+              <div className="other-choices">
+                <Dropdown
+                  field={`Search Query ${index + 1}`}
+                  value={coins[index].searchQuery}
+                  onChange={(_, value) =>
+                    handleInputChange(index, "searchQuery", value)
+                  }
+                  items={search_queries}
+                />
+                <Dropdown
+                  field={`Currency Abr ${index + 1}`}
+                  value={coins[index].currency}
+                  onChange={(_, value) =>
+                    handleInputChange(index, "currency", value)
+                  }
+                  items={currencies}
+                />
+              </div>
             </div>
-          </div>
-        ))}
-        {coinResults &&
-          coins.map((coin, index) =>
-            coin.id ? (
-              <div className={"results"} key={`result-${index}`}>
-                {" "}
+            {coinResults && coins[index].id && (
+              <div className="results">
                 <CoinGeckoSearch
                   key={index}
-                  coin={coin.coinID}
-                  searchQuery={coin.searchQuery}
-                  currency={coin.currency}
-                  symbol={percentage ? "% " : coin.currencySymbol}
-                />{" "}
+                  coin={coins[index].coinID}
+                  searchQuery={coins[index].searchQuery}
+                  currency={coins[index].currency}
+                  symbol={percentage ? "% " : coins[index].currencySymbol}
+                />
               </div>
-            ) : null
-          )}
+            )}
+          </div>
+        ))}
       </div>
       <div>
         <TrendingSearch />

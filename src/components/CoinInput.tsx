@@ -26,6 +26,7 @@ const CoinInput = ({ field, value, onChange }: Props) => {
         id="exampleDataList"
         value={value}
         onChange={handleChange}
+        placeholder="Search"
       ></input>
       <datalist id="datalistOptions">
         {Object.keys(coins).map((name, index) => (

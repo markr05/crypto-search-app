@@ -20,17 +20,57 @@ h1 {
 
 h5 {
   font-size: 2.5vmin;
+  color: rgb(32, 32, 32);
 }
 
 .title {
   text-align: center;
 }
 
+.market-trend {
+  color:rgb(12, 12, 12);
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin-right: 1%;
+  margin-top: .5%;
+  text-align: right;
+  font-size: 3vmin;
+  font-weight: bolder;
+  font-style: italic;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  padding: .3%;
+  border: solid;
+  border-width: 2px;
+  border-color:rgb(42, 42, 42);
+}
+
+.market-cap {
+  text-align: left;
+  grid-row: 2;
+  grid-column: 1;
+  color:rgb(32, 32, 32);
+}
+
+.market-percent {
+  align-self: center;
+  font-size: 2.5vmin;
+  grid-row: 2;
+  grid-column: 1;
+}
+
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 45% 45%;
   grid-template-rows: auto auto auto;
-  gap: 10%;
+  justify-content: space-between;
+}
+
+.coin-wrapper {
+  border-style: solid;
+  border-width: 2px;
+  padding: 3%;
 }
 
 .coin-input:first-child {
@@ -46,8 +86,22 @@ h5 {
 .results {
   grid-row: 3;
   font-weight: bolder;
-  font-size: 40px;
+  color:black;
+  padding: .3%;
+  max-width: 100%;
+  font-size: 4vmin;
+}
+
+.results .result-number {
+  font-size: 7vmin;
   color: black;
+}
+
+.results .thumbnail {
+  height: 6vmin;
+  width: 6vmin;
+  margin-left: 2.5%;
+  margin-top: 2.5%;
 }
 
 .form-control {
@@ -112,6 +166,18 @@ h5 {
   }
 }
 
+.trending-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  border-top: 2px solid rgb(32, 32, 32); 
+}
+
 .trending-coins {
   display: flex;
   margin-left: 1%;
@@ -119,14 +185,8 @@ h5 {
   column-gap: 5px;
   color: rgb(32, 32, 32);
   min-width: min-content;
-  border-width: 2px;
-  border-style: solid;
-  border-right: none;
-  border-left: none;
   justify-content: center;
   flex-wrap: wrap;
-  position: fixed;
-  bottom: 0;
 }
 
 .trending-coins .coin {

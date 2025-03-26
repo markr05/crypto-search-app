@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { search_queries } from "../constants";
+import { getCoinIdNameMap } from "../services/coingeckoService";
 
 interface Props {
   BASE_URL?: string;
@@ -20,6 +22,8 @@ const CoinGeckoSearch = ({
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [percentage, setPercentage] = useState(false);
+  const coins = getCoinIdNameMap();
 
   useEffect(() => {
     if (!coin) {
@@ -27,6 +31,8 @@ const CoinGeckoSearch = ({
       setLoading(false);
       return;
     }
+
+    setPercentage(searchQuery.toLowerCase().includes("change"));
 
     const fetchData = async () => {
       try {
@@ -56,8 +62,14 @@ const CoinGeckoSearch = ({
     fetchData();
   }, [BASE_URL, coin, endpoint]);
 
-  if (loading) return <div className="results">Loading...</div>;
-  if (error) return <div className="results">Error: {error}</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) {
+    if (error.includes("Network")) {
+      return <div>Search limit reached. Please wait.</div>;
+    } else {
+      return <div>Error: {error}</div>;
+    }
+  }
 
   let value;
 
@@ -66,26 +78,40 @@ const CoinGeckoSearch = ({
   }
 
   if (value === undefined || value === null) {
-    return (
-      <div className="results">
-        {symbol} N/A (Data not available for {searchQuery} in{" "}
-        {currency.toLowerCase()})
-      </div>
-    );
+    return <div>{symbol} N/A (Data not available)</div>;
   }
 
   const formattedValue =
-    typeof value === "number"
+    value < 1
       ? value < 0.001
-        ? value.toExponential(6)
-        : value.toLocaleString(undefined, { maximumFractionDigits: 8 })
-      : value.toString();
-
+        ? value.toLocaleString(undefined, { maximumFractionDigits: 6 })
+        : value.toLocaleString(undefined, { maximumFractionDigits: 2 })
+      : value.toLocaleString(undefined, { maximumFractionDigits: 5 });
   return (
     <div>
-      <div className="results">
-        {symbol} {formattedValue}
-      </div>
+      {percentage ? (
+        <div>
+          <div>
+            <img className="thumbnail" src={data.image.small} /> {coins[coin]}
+          </div>
+          {search_queries[searchQuery]}:
+          <div className="result-number">
+            {formattedValue}
+            {symbol}
+          </div>
+        </div>
+      ) : (
+        <div>
+          <div>
+            <img className="thumbnail" src={data.image.small} /> {coins[coin]}
+          </div>
+          {search_queries[searchQuery]}:
+          <div className="result-number">
+            {symbol}
+            {formattedValue}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

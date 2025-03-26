@@ -42,7 +42,7 @@ const TrendingSearch = () => {
   }, []);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div>Error {error}</div>;
 
   const trendingCoinsList = data.coins.map(
     (coin: {
@@ -66,30 +66,37 @@ const TrendingSearch = () => {
 
   return (
     <div>
-      <span className="trending-coins">
-        {sortedTrendingCoins
-          .filter((coin: Coin) => coin.price > 0.0001)
-          .map((coin: Coin) => (
-            <div className="coin" key={coin.name}>
-              <div className="trending-title">{coin.name}</div>
-              <img className="thumbnail" src={coin.small} />
-              <div className="price">{`$${
-                coin.price < 10 ? coin.price.toFixed(3) : coin.price.toFixed(2)
-              }`}</div>
-              <div
-                className={
-                  coin.price_change_24h > 0
-                    ? "change positive"
-                    : "change negative"
-                }
-              >
-                {coin.price_change_24h > 0
-                  ? ` +${coin.price_change_24h.toFixed(3)}%`
-                  : ` ${coin.price_change_24h.toFixed(3)}%`}
+      <div className="trending-wrapper">
+        <span className="trending-coins">
+          {sortedTrendingCoins
+            .filter((coin: Coin) => coin.price > 0.0001)
+            .filter((coin: Coin) => Math.abs(coin.price_change_24h) > 4)
+            .map((coin: Coin) => (
+              <div className="coin" key={coin.name}>
+                <div className="trending-title">{coin.name}</div>
+                <img className="thumbnail" src={coin.small} />
+                <div className="price">{`$${
+                  coin.price < 10
+                    ? coin.price.toFixed(3)
+                    : coin.price.toLocaleString(undefined, {
+                        maximumFractionDigits: 2,
+                      })
+                }`}</div>
+                <div
+                  className={
+                    coin.price_change_24h > 0
+                      ? "change positive"
+                      : "change negative"
+                  }
+                >
+                  {coin.price_change_24h > 0
+                    ? ` +${coin.price_change_24h.toFixed(3)}%`
+                    : ` ${coin.price_change_24h.toFixed(3)}%`}
+                </div>
               </div>
-            </div>
-          ))}
-      </span>
+            ))}
+        </span>
+      </div>
     </div>
   );
 };
