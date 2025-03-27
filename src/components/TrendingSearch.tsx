@@ -66,7 +66,7 @@ const TrendingSearch = () => {
 
   return (
     <div>
-      <div className="trending-wrapper">
+      <div className="trending-wrapper first-scroll">
         <span className="trending-coins">
           {sortedTrendingCoins
             .filter((coin: Coin) => coin.price > 0.0001)

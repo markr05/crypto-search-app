@@ -26,13 +26,14 @@ const Button = ({ children, onClick }: Props) => {
         transition: "all 0.3s ease-in-out",
         backgroundColor:
           children === "SEARCH"
-            ? "hsl(210 100% 59%)"
+            ? "hsl(256 256 256)"
             : isCompareActive
-            ? "#28a745"
-            : "#dc3545",
+            ? "hsl(0 0 0)"
+            : "hsl(256 256 256)",
         border: "none",
         outline: "none",
-        color: "white",
+        color:
+          children === "SEARCH" ? "black" : isCompareActive ? "white" : "black",
       }}
       onClick={handleClick}
     >

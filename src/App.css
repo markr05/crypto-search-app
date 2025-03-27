@@ -1,12 +1,13 @@
 body {
   background-color: rgb(62, 62, 62);
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  overflow: hidden;
 }
 
 h1 {
   font-weight: bolder;
   transform: skewX(-20deg);
-  font-size: 7vmin;
+  font-size: 7vw;
   
   animation: gradient-change 4s linear infinite alternate;
 
@@ -35,15 +36,15 @@ h5 {
   margin-right: 1%;
   margin-top: .5%;
   text-align: right;
-  font-size: 3vmin;
+  font-size: 2vw;
   font-weight: bolder;
-  font-style: italic;
   display: grid;
   grid-template-rows: 1fr 1fr;
   padding: .3%;
   border: solid;
   border-width: 2px;
   border-color:rgb(42, 42, 42);
+  background-color: rgb(82, 82, 82);
 }
 
 .market-cap {
@@ -175,24 +176,31 @@ h5 {
   bottom: 0;
   left: 0;
   z-index: 1000;
-  border-top: 2px solid rgb(32, 32, 32); 
-}
-
-.trending-coins {
-  display: flex;
+  border-top: 2px solid rgb(32, 32, 32) !important;
+  background-color: rgb(82, 82, 82) !important;
+ }
+ 
+ .trending-coins-container {
+  width: 100%;
+  position: relative;
+ }
+ 
+ .trending-coins {
+  display: inline-flex;
   margin-left: 1%;
   margin-right: 1%;
-  column-gap: 5px;
+  column-gap: 20px;
   color: rgb(32, 32, 32);
-  min-width: min-content;
   justify-content: center;
-  flex-wrap: wrap;
-}
-
-.trending-coins .coin {
+  align-items: center;
+  width: 100%;
+ }
+ 
+ .trending-coins .coin {
+  flex-shrink: 0;
   max-width: min-content;
   max-height: min-content;
-  font-size: 2vmin;
+  font-size: 1.1vw;
   white-space: nowrap;
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
@@ -200,8 +208,9 @@ h5 {
   align-items: center;
   border-left: solid;
   border-width: 2px;
-}
-
+  padding: 0 .5vw;
+ }
+ 
 .trending-coins .coin:first-child {
   border-left: none;
 }
@@ -215,27 +224,28 @@ h5 {
 }
 
 .trending-coins .thumbnail {
-  height: 4vmin;
-  width: 4vmin;
+  height: 2vw;
+  width: 2vw;
   grid-row: 2/4;
   grid-column: 1;
 }
 
 .trending-title {
-  font-size: 2.2vmin;
+  font-weight: bold;
+  font-size: 1.3vw;
 }
 
 .trending-coins .price {
   color: rgb(27, 27, 27);
   grid-row: 2;
   grid-column: 1;
-  margin-left: 5.3vmin;
+  margin-left: 3vw;
 }
 
 .trending-coins .change {
   grid-row: 3;
   grid-column: 1;
-  margin-left: 5.3vmin;
+  margin-left: 3vw;
 }
 
 .positive {
@@ -244,4 +254,13 @@ h5 {
 
 .negative {
   color: #F44336;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
 }

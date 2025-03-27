@@ -33,7 +33,10 @@ function App() {
       </div>
       <div className="container mt-2">
         {[0, ...(compare ? [1] : [])].map((index) => (
-          <div className="coin-wrapper" key={index}>
+          <div
+            className={`coin-wrapper ${index === 1 ? "fade-in" : ""}`}
+            key={index}
+          >
             <div className="coin-input">
               <CoinInput
                 field={`Coin ${index + 1}`}
