@@ -33,7 +33,7 @@ const CoinGeckoSearch = ({
 
   if (loading) return <div>Loading...</div>;
   if (error) {
-    if (error.includes("Network" || "429")) {
+    if (error.includes("Network") || error.includes("429")) {
       return <div>Search limit reached. Please wait.</div>;
     } else {
       return <div>Error: {error}</div>;
