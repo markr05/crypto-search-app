@@ -22,11 +22,9 @@ function App() {
 
   return (
     <>
-      <h1 className="title main-title">CryptoSearch</h1>
+      <h1 className="title">CryptoSearch</h1>
       <h5 className="title">Powered by Coingecko API</h5>
-      <div>
-        <MarketTrends />
-      </div>
+      <MarketTrends />
       <div className="search-buttons">
         <Button onClick={handleButtonClick}>SEARCH</Button>
         <Button onClick={handleCompareClick}>COMPARE</Button>
@@ -76,9 +74,7 @@ function App() {
           </div>
         ))}
       </div>
-      <div>
-        <TrendingSearch />
-      </div>
+      <TrendingSearch />
     </>
   );
 }

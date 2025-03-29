@@ -1,50 +1,34 @@
-import { useEffect, useState, memo } from "react";
+import { memo } from "react";
+import { apiSearch } from "../services/apiSearch";
 
 const BASE_URL = "https://api.coingecko.com/api/v3/";
 const ENDPOINT = "global";
 
+interface GlobalData {
+  total_market_cap: {
+    usd: number;
+    [key: string]: number;
+  };
+  market_cap_change_percentage_24h_usd: number;
+  [key: string]: any;
+}
+
 const MarketTrends = () => {
-  const [data, setData] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`${BASE_URL}${ENDPOINT}`);
+  const { data, loading, error } = apiSearch({
+    baseUrl: BASE_URL,
+    endpoint: ENDPOINT,
+  });
 
-        if (!response.ok) {
-          const errorDetails = await response.json().catch(() => ({}));
-          throw new Error(
-            `${response.status} ${errorDetails.error || response.statusText}`
-          );
-        }
-
-        const result = await response.json();
-        setData(result);
-        setError(null);
-      } catch (err: any) {
-        setError(
-          err.message || `An unexpected error occurred while fetching data.`
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div></div>;
+  if (error) return <div></div>;
 
   const { total_market_cap, market_cap_change_percentage_24h_usd } =
-    data?.data || {};
+    data?.data as GlobalData;
 
   return (
     <div>
       <span className="market-trend">
-        <div>
+        <div className="result-number">
           $
           {total_market_cap.usd.toLocaleString(undefined, {
             maximumFractionDigits: 0,

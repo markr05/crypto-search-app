@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-interface Props {
+interface ButtonProps {
   children: string;
   onClick: () => void;
 }
 
-const Button = ({ children, onClick }: Props) => {
+const Button = ({ children, onClick }: ButtonProps) => {
   const [isCompareActive, setIsCompareActive] = useState(false);
 
   const handleClick = () => {
@@ -17,23 +17,14 @@ const Button = ({ children, onClick }: Props) => {
 
   return (
     <button
-      className="btn skewed-btn"
+      className={
+        children === "SEARCH"
+          ? "btn skewed-btn search-button"
+          : "btn skewed-btn"
+      }
       style={{
-        marginBottom: "0",
-        transform: "skewX(-15deg)",
-        padding: "10px 20px",
-        fontWeight: "bold",
-        transition: "all 0.3s ease-in-out",
-        backgroundColor:
-          children === "SEARCH"
-            ? "hsl(256 256 256)"
-            : isCompareActive
-            ? "hsl(0 0 0)"
-            : "hsl(256 256 256)",
-        border: "none",
-        outline: "none",
-        color:
-          children === "SEARCH" ? "black" : isCompareActive ? "white" : "black",
+        backgroundColor: isCompareActive ? "black" : "white",
+        color: isCompareActive ? "white" : "black",
       }}
       onClick={handleClick}
     >

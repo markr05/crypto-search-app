@@ -1,11 +1,11 @@
-interface Props {
+interface DropdownProps {
   field: string;
   value: string;
   onChange: (field: string, value: string) => void;
   items: Record<string, string>;
 }
 
-const Dropdown = ({ field, value, onChange, items }: Props) => {
+const Dropdown = ({ field, value, onChange, items }: DropdownProps) => {
   const onItemClick = (key: string) => {
     onChange(field, key);
   };

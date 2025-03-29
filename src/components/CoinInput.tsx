@@ -1,12 +1,12 @@
 import { getCoinIdNameMap } from "../services/coingeckoService";
 
-interface Props {
+interface InputProps {
   field: string;
   value: string;
   onChange: (field: string, value: string) => void;
 }
 
-const CoinInput = ({ field, value, onChange }: Props) => {
+const CoinInput = ({ field, value, onChange }: InputProps) => {
   const coins = getCoinIdNameMap();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,15 +15,11 @@ const CoinInput = ({ field, value, onChange }: Props) => {
 
   return (
     <div className="input-group mb-3 ml-5">
-      <span className="input-group-text" id="basic-addon1">
-        {field}
-      </span>
+      <span className="input-group-text">{field}</span>
       <input
         type="text"
         className="form-control focus:outline-none"
-        aria-describedby="basic-addon1"
         list="datalistOptions"
-        id="exampleDataList"
         value={value}
         onChange={handleChange}
         placeholder="Search"
